@@ -1,0 +1,86 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block csslink %} {% static 'regpay/css/regpay.css'%} {% endblock %}
+{% block title %} Реестр платежей {% endblock %}
+{% block content %}
+
+      <main class="content-wrapper">
+        <div class="container-fluid">
+            <div class="top-table">
+                <h2>Реестр Платежей</h2>
+                <button><a href="{% url 'regpay_createform' %}">Добавить</a></button>
+                <button>Скопировать и добавить</button>
+                <button>Удалить</button>
+    </div>
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+        <tr>
+            <th>Выбрать</th>
+            <th>Номер</th>
+            <th>Название</th>
+            <th>Сумма</th>
+            <th>Причина</th>
+            <th>Ответственный</th>
+            <th>Маршрут</th>
+            <th>Контрагент</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="checkbox">            </td>
+            <td><a href="form.html">Content 1</a></td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox">            </td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox">            </td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox">            </td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox">            </td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td>Content 1</td>
+            <td></td>
+        </tr>
+        <tbody>
+    </table>
+</div>
+        </div>
+    </main>
+{% endblock %}

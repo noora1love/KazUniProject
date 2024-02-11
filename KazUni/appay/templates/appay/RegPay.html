@@ -1,0 +1,92 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load appay_tags %}
+{% block csslink %} {% static 'appay/css/createform.css'%} {% endblock %}
+{% block title %} Создание платежа {% endblock %}
+{% block content %}
+
+<main class="content-wrapper">
+    <div class="container-fluid">
+        <div class="top-table">
+            <h2>Реестр планируемых платежей на <br> Register of planned payments for</h2>
+            <button><a href="{% url 'RegPay' %}">Добавить</a></button>
+            <button id="copy-to-create-btn">Копировать в форму создания</button>
+            <button id="delete-btn">Удалить выбранные</button>
+        </div>
+        <div class="table-wrapper">
+            <form method="POST" id="delete-form" action="{% url 'RegPay_delete_selected' %}">
+                <table class="fl-table">
+                    <thead>
+                        <tr>
+                            <th>Выбрать</th>
+                            <th>№</th>
+                            <th>Контрагент <br> Counterparty</th>
+                            <th>№ договора <br> Contract No</th>
+                            <th>Департамент <br> Department </th>
+                            <th>Назначение платежа <br> Payment destination</th>
+                            <th>Номер и дата заявки на оплату</th>
+                            <th>Валюта <br> Currency</th>
+                            <th>Статья бюджета <br> Budget item</th>
+                            <th>Сумма платежа <br> Amount of payment</th>
+                            <th>Наименование банк счета</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <!-- В шаблоне -->
+                    {% for el in RegPay %}
+                        <tr>
+                            <td><input type="checkbox" name="delete" value="{{ el.id }}"> </td>
+                            <td>{{ el.id }}</td>
+                            <td>
+                                {% if el.model_pays.all %}
+                                    {% for model_pay in el.model_pays.all %}
+                                        <hr>
+                                        {{ model_pay.countrparty|default:"" }}<br>
+                                        <hr>
+                                    {% endfor %}
+                                {% else %}
+                                    No model pays
+                                {% endif %}
+                            </td>
+                            <td>{{ el.contractNumber|default:"" }}</td>
+                            <td>{{ el.Department.name|default:"" }}</td>
+                            <td>{{ el.paymentDestination|default:"" }}</td>
+                            <td>
+                                {% if el.model_pays.all %}
+                                    {% for model_pay in el.model_pays.all %}
+                                        <hr>
+                                        {{ model_pay.title|default:"Пусто" }} <br>
+                                        <hr>
+                                    {% endfor %}
+                                {% else %}
+                                    No model pays
+                                {% endif %}
+                            </td>
+                            <td>{{ el.currency|default:"" }}</td>
+                            <td>{{ el.budgetItem|default:"" }}</td>
+                            <td>{{ el.amountOfPayment|default:"" }}</td>
+                            <td>{{ el.nameOfBank.name|default:"" }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+           {% csrf_token %}
+        </form>
+    </div>
+    </div>
+</main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('delete-btn').addEventListener('click', function () {
+                document.getElementById('delete-form').submit();
+            });
+        });
+    </script>
+
+{% endblock %}
+
+
+
+

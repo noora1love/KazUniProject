@@ -1,0 +1,32 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block csslink %} {% static 'regpay/css/form.css' %} {% endblock %}
+{% block title %} Копирование и Добавление {% endblock %}
+
+{% block content %}
+    <main class="content-wrapper">
+        <div class="container-fluid">
+            <h2>Копирование и Добавление</h2>
+
+            <!-- Вставьте ваш код для отображения данных формы -->
+            <form method="post" action="{% url 'appay_main' %}">
+                {% csrf_token %}
+                {% for item in items %}
+                    <input type="text" name="field1" value="{{ item.title}}">
+                    <input type="text" name="field2" value="{{ item.typeofoperation }}">
+                    <input type="text" name="field1" value="{{ item.typeofpay }}">
+                    <input type="text" name="field2" value="{{ item.organization }}">
+                    <input type="text" name="field1" value="{{ item.bankcard }}">
+                    <input type="text" name="field2" value="{{ item.countrparty }}">
+                    <input type="text" name="field2" value="{{ item.dateofstart }}">
+                    <input type="text" name="field2" value="{{ item.dateofend }}">
+
+                    <br>
+                {% endfor %}
+
+                <button type="submit">Сохранить изменения</button>
+            </form>
+        </div>
+    </main>
+{% endblock %}

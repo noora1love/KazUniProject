@@ -1,0 +1,66 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block csslink %} {% static 'appay/css/appay.css'%} {% endblock %}
+{% block title %} Заявки на оплату {% endblock %}
+{% block content %}
+
+<main class="content-wrapper">
+    <div class="container-fluid">
+        <div class="top-table">
+            <h2>Список всех заявок на оплату</h2>
+            <button><a href="{% url 'appay_createform' %}">Добавить</a></button>
+            <button id="copy-to-create-btn">Копировать в форму создания</button>
+            <button id="delete-btn">Удалить выбранные</button>
+        </div>
+        <div class="table-wrapper">
+            <form method="POST" id="delete-form" action="{% url 'appay_delete_selected' %}">
+
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Выбрать</th>
+                        <th>Номер</th>
+                        <th>Название</th>
+                        <th>Тип Операции</th>
+                        <th>Тип Оплаты</th>
+                        <th>Организация</th>
+                        <th>Банк. карта</th>
+                        <th>Контрагент</th>
+                        <th>Дата начала</th>
+                        <th>Дата оплаты</th>
+                        <th>Комменты</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for el in modelpays %}
+                        <tr>
+                            <td><input type="checkbox" name="delete" value="{{ el.id }}"> </td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{el.id}}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{el.title}}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{el.typeofoperation}}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{el.typeofpay}}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{el.organization}}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{el.bankcard}}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{ el.countrparty }}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{ el.dateofstart }}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{ el.dateofend }}</a></td>
+                            <td><a href="{% url 'appay_form' el.id %}">{{ el.comments }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+           {% csrf_token %}
+            </form>
+    </div>
+</main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('delete-btn').addEventListener('click', function () {
+                document.getElementById('delete-form').submit();
+            });
+        });
+    </script>
+
+{% endblock %}

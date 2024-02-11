@@ -1,0 +1,455 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load appay_tags %}
+{% block csslink %} {% static 'appay/css/createform.css'%} {% endblock %}
+{% block title %} Редактирование платежа {{ data.id }}  {% endblock %}
+{% block content %}
+
+<div class="overlay" id="overlay"></div>
+
+<main class="content-wrapper">
+    <div class="container-fluid">
+        <div class="top-table">
+            <h2>Редактирование формы заявки под №{{ data.id }}</h2>
+        </div>
+
+        <div class="main-info">
+            <form method="POST" action="{% url 'appay_update' record_id=data.id %}">
+                {% csrf_token %}
+                <div class="row">
+<!-------------------------------- Название ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="title">Название:</label>
+                                <input name="title" type="text" class="form-control" placeholder="Введите название" value="{{ data.title }}">
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Тип операции ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="typeofoperations_name">Тип операции:</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" value="{{ data.typeofoperation_name }}" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                            <div class="hiddenDiv pop-up" data-field="typeofoperations">
+                                <div class="top-table">
+                                    <h4>Список Типов операции</h4>
+                                    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+                                </div>
+                                <table class="fl-table" data-field="typeofoperations">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Имя</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% get_items_from_db 'typeofoperations' as items %}
+                                        {% if items.error %}
+                                            <tr>
+                                                <td colspan="2">{{ items.error }}</td>
+                                            </tr>
+                                        {% else %}
+                                            {% for item in items.data %}
+                                                <tr onclick="selectTableRow(this, 'typeofoperations')">
+                                                    <td>{{ item.id }}</td>
+                                                    <td>{{ item.name }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                                <div class="pop-up-close" onclick="closeHiddenDiv('typeofoperations')">✖</div>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Тип оплаты ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="typeofpays_name">Тип оплаты:</label>
+                                <input name="typeofpays_name" id="open-pop-typeofpays" type="text" class="form-control"
+                                       placeholder="Введите тип оплаты" oninput="showHiddenDiv(this)"readonly value="{{ data.typeofpay_name }}">
+                                <input name="typeofpays_id" type="hidden">
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofpays')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                            <div class="hiddenDiv pop-up" data-field="typeofpays">
+                                <div class="top-table">
+                                    <h4>Список Типов оплаты</h4>
+                                    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+                                </div>
+                                <table class="fl-table" data-field="typeofpays">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Имя</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% get_items_from_db 'typeofpays' as items %}
+                                        {% if items.error %}
+                                            <tr>
+                                                <td colspan="2">{{ items.error }}</td>
+                                            </tr>
+                                        {% else %}
+                                            {% for item in items.data %}
+                                                <tr onclick="selectTableRow(this, 'typeofpays')">
+                                                    <td>{{ item.id }}</td>
+                                                    <td>{{ item.name }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                                <div class="pop-up-close" onclick="closeHiddenDiv('typeofpays')">✖</div>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Организация ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="organizations_name">Организация:</label>
+                                <input name="organizations_name" id="open-pop-organizations" type="text" class="form-control"
+                                       placeholder="Введите организацию" oninput="showHiddenDiv(this)" readonly value="{{data.organization_name}}">
+                                <input name="organizations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'organizations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                            <div class="hiddenDiv pop-up" data-field="organizations">
+                                <div class="top-table">
+                                    <h4>Список Организаций</h4>
+                                    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+                                </div>
+                                <table class="fl-table" data-field="organizations">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Имя</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% get_items_from_db 'organizations' as items %}
+                                        {% if items.error %}
+                                            <tr>
+                                                <td colspan="2">{{ items.error }}</td>
+                                            </tr>
+                                        {% else %}
+                                            {% for item in items.data %}
+                                                <tr onclick="selectTableRow(this, 'organizations')">
+                                                    <td>{{ item.id }}</td>
+                                                    <td>{{ item.name }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                                <div class="pop-up-close" onclick="closeHiddenDiv('organizations')">✖</div>
+                            </div>
+                        </div>
+                    </div>
+
+<!-------------------------------- Контрагент ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="countrypartyes_name">Контрагент:</label>
+                                <input name="countrypartyes_name" id="open-pop-countrypartyes" type="text" class="form-control"
+                                       placeholder="Введите контрагента" oninput="showHiddenDiv(this)" readonly value="{{ data.countrparty_name }} ">
+                                <input name="countrypartyes_id" type="hidden">
+                                <button type="button" onclick="showHiddenDiv(this, 'countrypartyes')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                            <div class="hiddenDiv pop-up" data-field="countrypartyes">
+                                <div class="top-table">
+                                    <h4>Список Контрагентов</h4>
+                                    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+                                </div>
+                                <table class="fl-table" data-field="countrypartyes">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Имя</th>
+                                            <th>Полное наименование</th>
+                                            <th>БИН</th>
+                                            <th>КБЕ</th>
+                                            <th>Код ОКПО</th>
+                                            <th>Страна</th>
+                                            <th>Номер регистрации</th>
+                                            <th>Регион</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% get_items_from_db 'countrypartyes' as items %}
+                                        {% if items.error %}
+                                            <tr>
+                                                <td colspan="2">{{ items.error }}</td>
+                                            </tr>
+                                        {% else %}
+                                            {% for item in items.data %}
+                                                <tr onclick="selectTableRow(this, 'countrypartyes')">
+                                                    <td>{{ item.id }}</td>
+                                                    <td>{{ item.name }}</td>
+                                                    <td>{{ item.fullname }}</td>
+                                                    <td>{{ item.bin }}</td>
+                                                    <td>{{ item.kbe }}</td>
+                                                    <td>{{ item.codeOKPO }}</td>
+                                                    <td>{{ item.country.name }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                                <div class="pop-up-close" onclick="closeHiddenDiv('countrypartyes')">✖</div>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Банковская карта ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="bankcards_name">Банковская карта:</label>
+                                <input name="bankcards_name" id="open-pop-bankcards" type="text" class="form-control"
+                                       placeholder="Введите банковскую карту" oninput="showHiddenDiv(this)"  readonly value="{{data.bankcard_name}}">
+                                <input name="bankcards_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'bankcards')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                            <div class="hiddenDiv pop-up" data-field="bankcards">
+                                <div class="top-table">
+                                    <h4>Список Банковских карт</h4>
+                                    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+                                </div>
+                                <table class="fl-table" data-field="bankcards">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Имя</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% get_items_from_db 'bankcards' as items %}
+                                        {% if items.error %}
+                                            <tr>
+                                                <td colspan="2">{{ items.error }}</td>
+                                            </tr>
+                                        {% else %}
+                                            {% for item in items.data %}
+                                                <tr onclick="selectTableRow(this, 'bankcards')">
+                                                    <td>{{ item.id }}</td>
+                                                    <td>{{ item.name }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                                <div class="pop-up-close" onclick="closeHiddenDiv('bankcards')">✖</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+
+<!-------------------------------- Дата Расхода ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="dateofend">Дата Расхода:</label>
+                                <input name="dateofend" type="date" class="form-control" placeholder="Выберите дату расхода" VALUE="{{ data.dateofend }}">
+                            </div>
+                        </div>
+                    </div>
+
+<!-------------------------------- Дата Подачи ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="dateofstart">Дата Подачи:</label>
+                                <input name="dateofstart" type="date" class="form-control" placeholder="Выберите дату подачи" VALUE="{{ data.dateofstart }}">
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Комментарии ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="comments">Комментарии:</label>
+                                <input name="comments" class="form-control" placeholder="Введите комментарии">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="btn btn-primary">{% if data.id %}Сохранить{% else %}Добавить{% endif %}</button>
+                    <a href="{% url 'appay_main' %}" class="btn btn-secondary">Назад</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="payment">
+            <div class="payment-header">
+                <h2>Платеж</h2>
+            </div>
+            <div class="payment-inner">
+                <h6>Расчеты с контрагентами</h6>
+
+                    <div id="cashDropdown" class="col-md-4" style="display: none;">
+                        <p>Lorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem LoremLorem Lorem</p>
+                    </div>
+
+                    <div id="creditCardDropdown" class="col-md-4" style="display: none;">
+                        BCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCDBCD
+                    </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+
+    function showHiddenDiv(element, fieldName) {
+        var hiddenDiv = document.querySelector(`.hiddenDiv[data-field="${fieldName}"]`);
+        var overlay = document.getElementById('overlay');
+
+        hiddenDiv.classList.add('active');
+        overlay.classList.add('active');
+
+        // Заполняем таблицу данными с сервера
+        fetch(`/appay/createform/${fieldName}_data/`)
+            .then(response => response.json())
+            .then(data => populateTable(fieldName, data))
+            .catch(error => console.error(`Ошибка при получении данных: ${fieldName} data:`, error));
+    }
+
+
+    function populateTable(fieldName, data) {
+        var tableBody = document.querySelector(`.hiddenDiv[data-field="${fieldName}"] tbody`);
+        tableBody.innerHTML = "";
+
+        if (Array.isArray(data)) {
+            data.forEach(function (item) {
+                var row = tableBody.insertRow();
+
+
+                var commonCellNames = ['id', 'name'];
+                commonCellNames.forEach(function (cellName) {
+                    var cell = row.insertCell();
+                    cell.innerText = item[cellName] || '';
+                });
+
+
+                if (fieldName === 'countrypartyes') {
+                    var countrypartyesCellNames = ['fullname', 'bin', 'kbe', 'codeOKPO', 'country', 'numberofregistration', 'region'];
+                    countrypartyesCellNames.forEach(function (cellName) {
+                        var cell = row.insertCell();
+                        cell.innerText = item[cellName] || '';
+                    });
+                }
+
+                row.addEventListener("click", function () {
+                    selectElement(fieldName, item.id, item.name);
+                });
+            });
+        } else {
+            console.error(`Data is not an array:`, data);
+        }
+    }
+
+    function highlightTableRow(fieldName) {
+        var inputName = document.getElementsByName(`${fieldName}_name`)[0];
+        var table = document.querySelector(`.hiddenDiv[data-field="${fieldName}"] table`);
+        var tr = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < tr.length; i++) {
+            var td = tr[i].getElementsByTagName("td")[1]; // Поиск второй ячейки (в данном случае, имя)
+            if (td) {
+                var txtValue = td.textContent || td.innerText;
+                if (txtValue === inputName.value) {
+                    tr[i].classList.add("selected");
+                } else {
+                    tr[i].classList.remove("selected");
+                }
+            }
+        }
+    }
+
+    function searchTable(element) {
+        var parentDiv = element.closest('.form-group');
+        var fieldName = parentDiv.getAttribute('data-field');
+        var input = element;
+        var filter = input.value.toUpperCase();
+        var table = parentDiv.querySelector('table');
+        console.log('table:', table); // Проверьте, что таблица найдена
+        var tr = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < tr.length; i++) {
+            var td = tr[i].querySelector("td:nth-child(2)");
+
+            if (td) {
+                var txtValue = td.textContent || td.innerText;
+                console.log('txtValue:', txtValue); // Проверьте значения, чтобы убедиться, что они корректны
+                tr[i].style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
+            }
+        }
+    }
+
+
+
+    function selectTableRow(element, fieldName) {
+        var inputName = document.getElementsByName(`${fieldName}_name`)[0];
+        inputName.value = element.cells[1].innerText;
+
+        closeHiddenDiv(fieldName);
+
+        highlightTableRow(fieldName);
+    }
+
+    function selectElement(fieldName, selectedId, selectedName) {
+        var inputName = document.getElementsByName(`${fieldName}_name`)[0];
+        var inputId = document.getElementsByName(`${fieldName}_id`)[0];
+
+        inputName.value = selectedName;
+        inputId.value = selectedId;
+
+        closeHiddenDiv(fieldName);
+
+        highlightTableRow(fieldName);
+
+        if (fieldName === 'typeofpays') {
+            var cashDropdown = document.getElementById('cashDropdown');
+            var creditCardDropdown = document.getElementById('creditCardDropdown');
+
+            if (cashDropdown && creditCardDropdown) {
+                if (inputName.value === 'Оплата Картой') {
+                    cashDropdown.style.display = 'none';
+                    creditCardDropdown.style.display = 'block';
+                } else if (inputName.value === '') {
+                    cashDropdown.style.display = 'block';
+                    creditCardDropdown.style.display = 'none';
+                }
+            } else {
+                console.error(`Dropdowns not found for field: ${fieldName}`);
+            }
+        }
+    }
+
+    function closeHiddenDiv(fieldName) {
+        var hiddenDiv = document.querySelector(`.hiddenDiv[data-field="${fieldName}"]`);
+        var overlay = document.getElementById('overlay');
+
+        hiddenDiv.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+</script>
+{% endblock %}

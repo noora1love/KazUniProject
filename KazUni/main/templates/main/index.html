@@ -1,0 +1,16 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block csslink %} {% static 'main/css/main.css'%} {% endblock %}
+{% block title %} Main Menu {% endblock %}
+{% block content %}
+<main class="content-wrapper">
+        <div class="container-fluid">
+            <h2><a href="{% url 'appay_main' %}">Заявки на оплату</a></h2>
+            <div class="line"></div>
+            <h2><a href="{% url 'RegPay' %}">Реестр платежей</a></h2>
+            <div class="line"></div>
+            <h2><a href="{% url 'regpay_main' %}"></a>Еще что-то</a></h2>
+            <div class="line"></div>
+        </div>
+</main>
+{% endblock %}

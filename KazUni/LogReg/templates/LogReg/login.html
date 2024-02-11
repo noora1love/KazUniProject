@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'LogReg/css/login.css'%}">
+</head>
+<body>
+
+
+    <div class="wrapper">
+
+        <form class="login" method="POST">
+            {% csrf_token %}
+            <p class="title">Вход в систему</p>
+            <input type="text" placeholder="Имя пользователя" id="login" required name="username" autofocus/>
+            <i class="fa fa-user"></i>
+            <input type="password" placeholder="Пароль" id="psw" required name="password" />
+            <i class="fa fa-key"></i>
+            <a href="{% url 'register' %}">Нету аккаунта? Создай</a>
+            <button type="submit">
+              <i class="spinner"></i>
+              <span class="state">Войти</span>
+            </button>
+            {{ form.errors }}
+        </form>
+        <footer><a target="blank" href="#">KazUni Project</a></footer>
+    </div>
+
+    <script>
+        var working = false;
+        $('.login').on('submit', function(e) {
+          e.preventDefault();
+          if (working) return;
+              working = true;
+          var $this = $(this),
+            $state = $this.find('button > .state');
+              $this.addClass('loading');
+              $state.html('Authenticating');
+              setTimeout(function() {
+                    $this.addClass('ok');
+                    $state.html('Welcome back!');
+                    setTimeout(function() {
+                      $state.html('Log in');
+                      $this.removeClass('ok loading');
+                      working = false;
+                    }, 4000);
+              }, 3000);
+        });
+    </script>
+</body>
+</html>

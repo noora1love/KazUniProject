@@ -1,0 +1,146 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load appay_tags %}
+{% block csslink %} {% static 'appay/css/createform.css'%} {% endblock %}
+{% block title %} Создание платежа {% endblock %}
+{% block content %}
+
+<div class="overlay" id="overlay"></div>
+
+<main class="content-wrapper">
+    <div class="container-fluid">
+        <div class="top-table">
+            <h2>Создать платеж.</h2>
+        </div>
+
+        <div class="main-info">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+<!-------------------------------- Дата Подачи ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="dateofstart">Номер Договора :</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Дата Расхода ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="department">Департамент :</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Комментарии ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="comments">Назначение платеже:</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+<!-------------------------------- Дата Подачи ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="dateofstart">Номер Договора :</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Дата Расхода ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="department">Департамент :</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Комментарии ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="comments">Назначение платеже:</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+<!-------------------------------- Дата Подачи ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="dateofstart">Номер Договора :</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Дата Расхода ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="department">Департамент :</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+<!-------------------------------- Комментарии ----------------------------------------->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="labin">
+                                <label for="comments">Назначение платеже:</label>
+                                <input name="typeofoperations_name" id="open-pop-typeofoperations" type="text" class="form-control" placeholder="Введите тип операции" oninput="showHiddenDiv(this)" readonly>
+                                <input name="typeofoperations_id" type="hidden" >
+                                <button type="button" onclick="showHiddenDiv(this, 'typeofoperations')" class="btn btn-info"><i
+                                        class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    <a href="{% url 'appay_main' %}" class="btn btn-secondary">Назад</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script>
+
+</script>
+{% endblock %}

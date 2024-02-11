@@ -1,0 +1,127 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block csslink %} {% static 'appay/css/form.css'%} {% endblock %}
+{% block title %} Форма номер {{ modelpay.id }}{% endblock %}
+
+{% block content %}
+
+      <main class="content-wrapper">
+        <div class="container-fluid">
+            <div class="top-table">
+                <h2>Подробная форма заявки  {{ modelplay.id }} </h2>
+                <button><a href="{% url 'appay_update' record_id=modelpay.id %}">Редактировать</a></button>
+                <button><a href="{% url 'appay_main'%}">Назад</a></button>
+            </div>
+            <div class="table">
+                <div class="main">
+                    <div class="main-inner row">
+                        <div class="main-inner-info col">
+                            <h6>Информация о заявке</h6>
+                            <hr>
+                            <div class="main-inne col inline">
+                                    <div class="main-inner-info-1">
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Номер :</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Название :</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Тип Операции :</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Тип Оплаты:</p>
+                                        </div>
+                                    </div>
+                                    <div class="main-inner-info-2">
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.id }}</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.title }}</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.typeofoperation }}</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.typeofpay }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="main-inner-contracts col">
+                                <h6>Информация о контракте :</h6>
+                                <hr>
+                                <div class="main-inne">
+                                    <div class="main-inner-info-1">
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Организация: </p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Банковаская карта:</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Контрагент:</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Дата начала:</p>
+                                        </div>
+                                    </div>
+                                    <div class="main-inner-info-2">
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.organization }}</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.bankcard }}</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1" id="countryparty-detail">
+                                            <p><a href="{% url 'countryparty_detail' modelpay.countrparty.id %}">{{ modelpay.countrparty.name }}</a></p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.dateofstart }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main-inner-contractinfo col">
+                                <h6>Дополнительная информация</h6>
+                                <hr>
+                                <div class="main-inne">
+                                    <div class="main-inner-info-1">
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Дата оплаты:</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>Комментарии::</p>
+                                        </div>
+                                    </div>
+                                    <div class="main-inner-info-2">
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.dateofend }}</p>
+                                        </div>
+                                        <div class="main-inner-info-1-name1">
+                                            <p>{{ modelpay.comments }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="main-comments">
+                            <h6>Комментарии</h6>
+                            <div class="main-comments-input">
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="main-comments-btn">
+                                <button class="btn col-md-2 btn-primary" id="btn4">Отправить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% endblock%}

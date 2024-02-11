@@ -1,0 +1,94 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block csslink %} {% static 'regpay/css/form.css'%} {% endblock %}
+{% block title %} Форма номер {{ modelpay.id }}{% endblock %}
+
+{% block content %}
+    <main class="content-wrapper">
+        <div class="container-fluid">
+            <div class="top-table">
+                <h2>Подробная форма заявки  {{ modelpay.id }} </h2>
+                <button><a href="{% url 'appay_main'%}">Назад</a></button>
+            </div>
+            <div class="table">
+                <div class="main">
+                    <h6>Информация о {{ countryparty.name }}</h6>
+                            <hr>
+                    <div class="main-inner row">
+                        <div class="main-inner-info col">
+                            <div class="main-inne col inline">
+                                <div class="main-inner-info-1">
+                                    <div class="main-inner-info-1-name1">
+                                        <p>Номер :</p>
+                                    </div>
+                                    <div class="main-inner-info-1-name1">
+                                        <p>Полное наименование :</p>
+                                    </div>
+                                    <div class="main-inner-info-1-name1">
+                                        <p>БИН :</p>
+                                    </div>
+                                    <div class="main-inner-info-1-name1">
+                                        <p>КБЕ :</p>
+                                    </div>
+                                </div>
+                                <div class="main-inner-info-2">
+                                    <div class="main-inner-info-1-name1">
+                                        <p>{{ countryparty.id }}</p>
+                                    </div>
+                                    <div class="main-inner-info-1-name1">
+                                        <p>{{ countryparty.fullname }}</p>
+                                    </div>
+                                    <div class="main-inner-info-1-name1">
+                                        <p>{{ countryparty.bin }}</p>
+                                    </div>
+                                    <div class="main-inner-info-1-name1">
+                                        <p>{{ countryparty.kbe }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main-inne col inline">
+
+                            <div class="main-inner-info-1">
+                                <div class="main-inner-info-1-name1">
+                                    <p>Код ОКПО :</p>
+                                </div>
+                                <div class="main-inner-info-1-name1">
+                                    <p>Страна :</p>
+                                </div>
+                                <div class="main-inner-info-1-name1">
+                                    <p>Номер Регистрации :</p>
+                                </div>
+                                <div class="main-inner-info-1-name1">
+                                    <p>Родительский Контрагент :</p>
+                                </div>
+                                <div class="main-inner-info-1-name1">
+                                    <p>Регион:</p>
+                                </div>
+                            </div>
+                            <div class="main-inner-info-2">
+                                <div class="main-inner-info-1-name1">
+                                    <p>{{ countryparty.codeOKPO }}</p>
+                                </div>
+                                <div class="main-inner-info-1-name1">
+                                    <p>{{ countryparty.country }}</p>
+                                </div>
+                                <div class="main-inner-info-1-name1">
+                                    <p>{{ countryparty.numberofregistration }}</p>
+                                </div>
+                                <div class="main-inner-info-1-name1">
+                                    <p>{{ countryparty.parentcountryparty }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main-inner-info col">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <pre>{{ countryparty }}</pre>
+{% endblock %}
