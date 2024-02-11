@@ -102,7 +102,7 @@ class ModelPays(models.Model):
         dateofend = models.DateField(default=2005)
         typeofpay = models.ForeignKey(typeofpays, on_delete=models.CASCADE)
         organization = models.ForeignKey(organizations, on_delete=models.CASCADE)
-        moneyresource = models.ForeignKey(moneyresources, on_delete=models.CASCADE)
+        moneyresource = models.ForeignKey(moneyresources, on_delete=models.CASCADE, null=True, blank=True)
         typeofoperation = models.ForeignKey(typeofoperations, on_delete=models.CASCADE)
         currency = models.ForeignKey(currencyes, on_delete=models.CASCADE, null=True, blank=True)
         countrparty = models.ForeignKey(countrypartyes, on_delete=models.CASCADE)

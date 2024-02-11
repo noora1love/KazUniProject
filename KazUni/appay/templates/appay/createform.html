@@ -5,6 +5,90 @@
 {% block title %} Создание платежа {% endblock %}
 {% block content %}
 
+<div class="hiddenDiv pop-up" data-field="dealofcountrparty">
+    <h4>Список dealofcountrparty</h4>
+    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+    <table class="fl-table" data-field="dealofcountrparty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% get_items_from_db 'dealofcountrparty' as items %}
+            {% if items.error %}
+            <tr>
+                <td colspan="2">{{ items.error }}</td>
+            </tr>
+            {% else %}
+            {% for item in items.data %}
+            <tr onclick="selectTableRow(this, 'dealofcountrparty')">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="pop-up-close" onclick="closeHiddenDiv('dealofcountrparty')">✖</div>
+</div>
+<div class="hiddenDiv pop-up" data-field="budgetitem">
+    <h4>Список budgetitem</h4>
+    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+    <table class="fl-table" data-field="budgetitem">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% get_items_from_db 'budgetitem' as items %}
+            {% if items.error %}
+            <tr>
+                <td colspan="2">{{ items.error }}</td>
+            </tr>
+            {% else %}
+            {% for item in items.data %}
+            <tr onclick="selectTableRow(this, 'budgetitem')">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="pop-up-close" onclick="closeHiddenDiv('budgetitem')">✖</div>
+</div>
+<div class="hiddenDiv pop-up" data-field="project">
+    <h4>Список project</h4>
+    <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
+    <table class="fl-table" data-field="project">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% get_items_from_db 'project' as items %}
+            {% if items.error %}
+            <tr>
+                <td colspan="2">{{ items.error }}</td>
+            </tr>
+            {% else %}
+            {% for item in items.data %}
+            <tr onclick="selectTableRow(this, 'project')">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="pop-up-close" onclick="closeHiddenDiv('project')">✖</div>
+</div>
 <div class="overlay" id="overlay"></div>
 
 <main class="content-wrapper">
@@ -12,10 +96,19 @@
         <div class="top-table">
             <h2>Создание заявки на оплату</h2>
         </div>
+        <div class="top-table">
+                <button id="add-row-btn">Добавить</button>
+                <button id="copy-to-create-btn">Выбрать еще что - то</button>
+                <button id="delete-btn">Удалить выбранные</button>
+            </div>
 
         <div class="main-info">
             <form method="POST">
                 {% csrf_token %}
+                <div class="buttons">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <a href="{% url 'appay_main' %}" class="btn btn-secondary">Назад</a>
+                </div>
                 <div class="row">
 <!-------------------------------- Название ----------------------------------------->
                     <div class="col-md-4">
@@ -278,175 +371,76 @@
                         </div>
                     </div>
                 </div>
+                <div class="tablepart">
+                    <div class="table-wrapper">
+                        <form method="POST" id="delete-form" action="{% url 'appay_delete_selected' %}">
+                            <table class="fl-table" id="underTable">
+                                <thead>
+                                <tr>
+                                    <th>Выбрать</th>
+                                    <th>Номер Строки</th>
+                                    <th>Договор Контрагента</th>
+                                    <th>Сумма Платежа </th>
+                                    <th>Статья бюджета</th>
+                                    <th>Проект</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                <div class="buttons">
-                    <button type="submit" class="btn btn-primary">Добавить</button>
-                    <a href="{% url 'appay_main' %}" class="btn btn-secondary">Назад</a>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
                 </div>
             </form>
         </div>
-        <div class="tablepart">
-                <div class="top-table">
-                    <button><a href="{% url 'appay_createform' %}">Выбрать контрагента</a></button>
-                    <button id="copy-to-create-btn">Выбрать еще что - то</button>
-                    <button id="delete-btn">Удалить выбранные</button>
-                </div>
-                <div class="table-wrapper">
-                    <form method="POST" id="delete-form" action="{% url 'appay_delete_selected' %}">
-
-                    <table class="fl-table">
-                        <thead>
-                            <tr>
-                                <th>Выбрать</th>
-                                <th>Номер Строки</th>
-                                <th>Договор Контрагента</th>
-                                <th>Сумма Платежа </th>
-                                <th>Статья бюджета</th>
-                                <th>Проект</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                                <tr>
-                                    <td><input type="checkbox" name="delete" value="{{ el.id }}"> </td>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="inner-table">
-                                            <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
-                                            <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i
-                                                class="fa-solid fa-list"></i></button>
-                                        </div>
-                                        <div class="hiddenDiv pop-up" data-field="dealofcountrparty">
-                                            <h4>Список dealofcountrparty</h4>
-                                            <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
-                                            <table class="fl-table" data-field="dealofcountrparty">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="select-checkbox">Выбор</th>
-                                                        <th>ID</th>
-                                                        <th>Имя</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% get_items_from_db 'dealofcountrparty' as items %}
-                                                    {% if items.error %}
-                                                        <tr>
-                                                            <td colspan="2">{{ items.error }}</td>
-                                                        </tr>
-                                                    {% else %}
-                                                        {% for item in items.data %}
-                                                            <tr onclick="selectTableRow(this, 'dealofcountrparty')">
-                                                                <td class="select-checkbox">
-                                                                    <input type="checkbox" name="delete" value="{{ item.id }}">
-                                                                </td>
-                                                                <td>{{ item.id }}</td>
-                                                                <td>{{ item.name }}</td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </tbody>
-                                            </table>
-                                            <div class="pop-up-close" onclick="closeHiddenDiv('dealofcountrparty')">✖</div>
-                                        </div>
-                                    </td>
-                                    <td><div class="inner-table"><input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)"></div></td>
-                                    <td><div class="inner-table"><input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
-                                            <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i
-                                                class="fa-solid fa-list"></i></button></div>
-                                        <div class="hiddenDiv pop-up" data-field="budgetitem">
-                                            <h4>Список budgetitem</h4>
-                                            <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
-                                            <table class="fl-table" data-field="budgetitem">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="select-checkbox">Выбор</th>
-                                                        <th>ID</th>
-                                                        <th>Имя</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% get_items_from_db 'dealofcountrparty' as items %}
-                                                    {% if items.error %}
-                                                        <tr>
-                                                            <td colspan="2">{{ items.error }}</td>
-                                                        </tr>
-                                                    {% else %}
-                                                        {% for item in items.data %}
-                                                            <tr onclick="selectTableRow(this, 'budgetitem')">
-                                                                <td class="select-checkbox"><input type="checkbox" name="delete" value="{{ el.id }}"></td>
-                                                                <td>{{ item.id }}</td>
-                                                                <td>{{ item.name }}</td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </tbody>
-                                            </table>
-                                            <div class="pop-up-close" onclick="closeHiddenDiv('budgetitem')">✖</div>
-                                        </div>
-                                    </td>
-
-                                    <td><div class="inner-table"><input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
-                                        <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i
-                                                class="fa-solid fa-list"></i></button></div>
-                                        <div class="hiddenDiv pop-up" data-field="project">
-                                            <h4>Список project</h4>
-                                            <input type="text" class="form-control" oninput="searchTable(this)" placeholder="Поиск...">
-                                            <table class="fl-table" data-field="project">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="select-checkbox">Выбор</th>
-                                                        <th>ID</th>
-                                                        <th>Имя</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% get_items_from_db 'dealofcountrparty' as items %}
-                                                    {% if items.error %}
-                                                        <tr>
-                                                            <td colspan="2">{{ items.error }}</td>
-                                                        </tr>
-                                                    {% else %}
-                                                        {% for item in items.data %}
-                                                            <tr onclick="selectTableRow(this, 'project')">
-                                                                <td class="select-checkbox"><input type="checkbox" name="delete" value="{{ el.id }}"></td>
-                                                                <td>{{ item.id }}</td>
-                                                                <td>{{ item.name }}</td>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </tbody>
-                                            </table>
-                                            <div class="pop-up-close" onclick="closeHiddenDiv('project')">✖</div>
-                                        </div>
-                                    </td>
-                                </tr>
-                        </tbody>
-                    </table>
-                   {% csrf_token %}
-                    </form>
-            </div>
-        </div>
-        <div class="payment">
-            <div class="payment-header">
-
-            </div>
-            <div class="payment-inner">
 
 
-                    <div id="cashDropdown" class="col-md-4" style="display: none;">
-                        <h2>Больше информации на счет оплаты.</h2>
-                        <p>Выбрана оплата картой, выберите вашу карту.</p>
-                    </div>
 
-                    <div id="creditCardDropdown" class="col-md-4" style="display: none;">
-                        <h2>Больше информации на счет оплаты.</h2>
-                        <p>Выбрана оплата наличкой, выберите вашу кассу.</p>
-                    </div>
-            </div>
-        </div>
-    </div>
+
 </main>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Находим кнопку "Добавить"
+        var addButton = document.getElementById('add-row-btn');
+        var rowCount = 1;
+        // Добавляем обработчик события на клик по кнопке "Добавить"
+        addButton.addEventListener('click', function() {
+            // Находим таблицу
+            var table = document.getElementById('underTable');
+
+            // Создаем новую строку
+            var newRow = table.insertRow();
+
+            // Добавляем ячейки в новую строку
+            newRow.innerHTML = `
+                <td><input type="checkbox" name="delete"></td>
+                <td>${rowCount}</td>
+                <td><div class="inner-table">
+                        <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                        <input name="dealofcountrparty_id" type="hidden" >
+                        <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                     </div></td>
+                <td><div class="inner-table">
+                                        <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                    </div></td>
+                <td><div class="inner-table">
+                                        <input name="budgetitem_id" type="hidden" >
+                                        <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                        <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                    </div></td>
+                <td><div class="inner-table">
+                                        <input name="project_id" type="hidden" >
+                                        <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                        <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                    </div></td>
+            `;
+
+            rowCount++;
+        });
+    });
+
 
     function showHiddenDiv(element, fieldName) {
 
@@ -474,17 +468,10 @@
             data.forEach(function (item) {
                 var row = tableBody.insertRow();
 
-                var commonCellNames = ['delete', 'id', 'name'];
+                var commonCellNames = ['id', 'name'];
                 commonCellNames.forEach(function (cellName) {
                     var cell = row.insertCell();
-                    if (cellName === 'delete') {
-                        var checkbox = document.createElement('input');
-                        checkbox.type = 'checkbox';
-                        checkbox.name = 'delete';
-                        cell.appendChild(checkbox);
-                    } else {
-                        cell.innerText = item[cellName] || '';
-                    }
+                    cell.innerText = item[cellName] || '';
                 });
 
 
