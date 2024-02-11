@@ -283,7 +283,7 @@ a:focus {
 
 .buttons {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     margin: 30px 0;
 }
 .content-wrapper{
@@ -316,7 +316,9 @@ a:focus {
     background-color: #0527af;
     transition: 0.3s;
 }
-
+.tablepart{
+    margin-top: 5%;
+}
 .top-table {
     margin-left: 5%;
 }

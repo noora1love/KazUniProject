@@ -5,6 +5,7 @@ from .views import delete_selected,DataListView, ModelPaysAPIView, CountrypartyD
 urlpatterns = [
     path('', views.appay_home, name='appay_main'),
     path('createform/', views.appay_createform, name='appay_createform'),
+    path('createformtable', views.your_table_view, name='appay_tablepart'),
     path('<int:pk>', views.NewsDetailView.as_view(), name='appay_form'),
     path('data/', views.NewsDetailView.as_view(), name='appay_countryparty'),
     path('delete_selected/', delete_selected, name='appay_delete_selected'),

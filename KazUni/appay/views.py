@@ -3,7 +3,7 @@ import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework.views import APIView
 from .templatetags.appay_tags import get_items_from_db
-from .models import ModelPays, budgetitems, projects, countrypartyes, deals, typeofoperations, typeofpays, organizations, bankcards, RegPay
+from .models import ModelPays, TableModelPays, budgetitems, projects, countrypartyes, deals, typeofoperations, typeofpays, organizations, bankcards, RegPay
 from django.views.generic import DetailView, UpdateView
 from django.views.decorators.http import require_POST
 from django.core.serializers.json import DjangoJSONEncoder
@@ -156,11 +156,25 @@ def delete_selected_RegPay(request):
         RegPay.objects.filter(id__in=selected_ids).delete()
 
     return redirect('RegPay')
+def your_table_view(request):
+
+        # Если запрос не POST, отображаем страницу с таблицей
+        field_names = ['typeofoperations', 'typeofpays', 'organizations', 'bankcards', 'countrypartyes']
+        field_data = {field_name: get_items_from_db(field_name) for field_name in field_names}
+        label_texts = {
+            'typeofoperations': 'Тип операции',
+            'typeofpays': 'Тип оплаты',
+            'organizations': 'Организация',
+            'bankcards': 'Банковская карта',
+            'countrypartyes': 'Контрагент',
+        }
+        # Отображаем страницу с таблицей
+        return render(request, 'appay/test.html', {'field_data': field_data, 'field_names': field_names, 'label_texts': label_texts})
+
 
 def appay_createform(request):
     if request.method == 'POST':
-
-        # Верхняя часть формы
+        # Получаем данные из POST-запроса для ModelPays
         title = request.POST.get('title')
         typeofoperations_name = request.POST.get('typeofoperations_name')
         typeofpays_name = request.POST.get('typeofpays_name')
@@ -171,15 +185,15 @@ def appay_createform(request):
         dateofend = request.POST.get('dateofend')
         comments = request.POST.get('comments')
 
+        # Получаем объекты из базы данных для ModelPays
         typeofoperation_instance = get_object_or_404(typeofoperations, name=typeofoperations_name)
         typeofpay_instance = get_object_or_404(typeofpays, name=typeofpays_name)
         organization_instance = get_object_or_404(organizations, name=organizations_name)
         bankcard_instance = get_object_or_404(bankcards, name=bankcards_name)
-        print(f'Trying to get countrypartyes with name: {countrypartyes_name}')
         countryparty_instance = get_object_or_404(countrypartyes, name=countrypartyes_name)
 
-
-        newdeal = ModelPays(
+        # Создаем новый объект ModelPays
+        new_model_pays = ModelPays(
             title=title,
             typeofoperation=typeofoperation_instance,
             typeofpay=typeofpay_instance,
@@ -190,27 +204,49 @@ def appay_createform(request):
             dateofend=dateofend,
             comments=comments
         )
-        newdeal.save()
+        new_model_pays.save()
 
-        title = request.POST.get('title')
+        # Получаем данные из POST-запроса для TableModelPays
+        numberofline = request.POST.get('numberofline')
+        dealofcountrparty_name = request.POST.get('dealofcountrparty_name')
+        paymentamount_name = request.POST.get('paymentamount_name')
+        budgetitem_name = request.POST.get('budgetitem_name')
+        project_name = request.POST.get('project_name')
 
+        # Получаем объекты из базы данных для TableModelPays
+        dealofcountrparty_instance = get_object_or_404(deals, name=dealofcountrparty_name)
+        budgetitem_instance = get_object_or_404(budgetitems, name=budgetitem_name)
+        project_instance = get_object_or_404(projects, name=project_name)
 
+        # Создаем новый объект TableModelPays
+        new_table_model_pays = TableModelPays(
+            numberofline=numberofline,
+            dealofcountrparty=dealofcountrparty_instance,
+            paymentamount=paymentamount_name,
+            budgetitem=budgetitem_instance,
+            project=project_instance
+        )
+        new_table_model_pays.save()
 
+        # Перенаправляем пользователя на другую страницу после успешного создания объектов
         return redirect('appay_main')
 
-    field_names = ['typeofoperations', 'typeofpays', 'organizations', 'bankcards', 'countrypartyes']
-    field_data = {field_name: get_items_from_db(field_name) for field_name in field_names}
+    else:
+        # Логика для GET-запроса
 
-    label_texts = {
-        'typeofoperations': 'Тип операции',
-        'typeofpays': 'Тип оплаты',
-        'organizations': 'Организация',
-        'bankcards': 'Банковская карта',
-        'countrypartyes': 'Контрагент',
-    }
+        field_names = ['typeofoperations', 'typeofpays', 'organizations', 'bankcards', 'countrypartyes']
+        field_data = {field_name: get_items_from_db(field_name) for field_name in field_names}
 
-    return render(request, 'appay/createform.html', {'field_data': field_data, 'field_names': field_names, 'label_texts': label_texts})
+        label_texts = {
+            'typeofoperations': 'Тип операции',
+            'typeofpays': 'Тип оплаты',
+            'organizations': 'Организация',
+            'bankcards': 'Банковская карта',
+            'countrypartyes': 'Контрагент',
+        }
 
+        return render(request, 'appay/createform.html',
+                      {'field_data': field_data, 'field_names': field_names, 'label_texts': label_texts})
 
 def appay_form(request, pk=None):
     instance = get_object_or_404(ModelPays, pk=pk) if pk else None

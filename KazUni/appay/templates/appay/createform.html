@@ -96,17 +96,14 @@
         <div class="top-table">
             <h2>Создание заявки на оплату</h2>
         </div>
-        <div class="top-table">
-                <button id="add-row-btn">Добавить</button>
-                <button id="copy-to-create-btn">Выбрать еще что - то</button>
-                <button id="delete-btn">Удалить выбранные</button>
-            </div>
+
 
         <div class="main-info">
             <form method="POST">
                 {% csrf_token %}
                 <div class="buttons">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button id="add-row-btn" type="button" class="btn btn-info">Добавить документ</button>
                     <a href="{% url 'appay_main' %}" class="btn btn-secondary">Назад</a>
                 </div>
                 <div class="row">
@@ -373,22 +370,22 @@
                 </div>
                 <div class="tablepart">
                     <div class="table-wrapper">
-                        <form method="POST" id="delete-form" action="{% url 'appay_delete_selected' %}">
+                        <form method="POST">
+                            {% csrf_token %}
                             <table class="fl-table" id="underTable">
                                 <thead>
-                                <tr>
-                                    <th>Выбрать</th>
-                                    <th>Номер Строки</th>
-                                    <th>Договор Контрагента</th>
-                                    <th>Сумма Платежа </th>
-                                    <th>Статья бюджета</th>
-                                    <th>Проект</th>
-                                </tr>
+                                    <tr>
+                                        <th>Выбрать</th>
+                                        <th>Номер Строки</th>
+                                        <th>Договор Контрагента</th>
+                                        <th>Сумма Платежа </th>
+                                        <th>Статья бюджета</th>
+                                        <th>Проект</th>
+                                    </tr>
                                 </thead>
-                                <tbody>
-
-                                </tbody>
+                                <tbody></tbody>
                             </table>
+
                         </form>
                     </div>
                 </div>
