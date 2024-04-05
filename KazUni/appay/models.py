@@ -20,6 +20,10 @@ class organizations(models.Model):
         def __str__(self):
                 return f'{self.name}'
 class budgetitems(models.Model):
+        ISAGROUP_CHOISES = {
+                "G" : "Group",
+                "N" : "No_Group"
+        }
         id1c = models.CharField(max_length=50, null=True, blank=True)
         code = models.CharField(max_length=9, null=True, blank=True)
         name = models.CharField(max_length=50, null=False, blank=False)
@@ -55,6 +59,7 @@ class typeofdeals(models.Model):
         def __str__(self):
                 return f'{self.name}'
 class countrypartyes(models.Model):
+
         id1c = models.CharField(max_length=50, null=True, blank=True)
         code = models.CharField(max_length=50, null=True, blank=True)
         name = models.CharField(max_length=50, null=False, blank=False)
@@ -123,6 +128,8 @@ class Departments(models.Model):
         name = models.CharField(max_length=50)
         def __str__(self):
                 return f'{self.name}'
+
+
 class RegPay(models.Model):
         name = models.CharField(max_length=50, null=False, blank=False)
         model_pays = models.ManyToManyField(ModelPays)
@@ -135,4 +142,5 @@ class RegPay(models.Model):
         nameOfBank = models.ForeignKey(Banks, on_delete=models.CASCADE)
         def __str__ (self):
                 return f'{self.name}'
+
 

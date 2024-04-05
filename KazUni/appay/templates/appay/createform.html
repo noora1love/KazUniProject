@@ -23,7 +23,7 @@
             </tr>
             {% else %}
             {% for item in items.data %}
-            <tr onclick="selectTableRow(this, 'dealofcountrparty')">
+            <tr onClick="selectElement('dealofcountrparty', 'selectedId', 'selectedName', this.parentNode)">
                 <td>{{ item.id }}</td>
                 <td>{{ item.name }}</td>
             </tr>
@@ -89,6 +89,7 @@
     </table>
     <div class="pop-up-close" onclick="closeHiddenDiv('project')">✖</div>
 </div>
+
 <div class="overlay" id="overlay"></div>
 
 <main class="content-wrapper">
@@ -383,7 +384,311 @@
                                         <th>Проект</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                <!-- 1 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" class="select-input" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this, 'dealofcountrparty')" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden">
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 2 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>2</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" class="select-input" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this.parentNode, 'dealofcountrparty')" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden">
+                                                <button type="button" onclick="showHiddenDiv(this.parentNode, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 3 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>3</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 4 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>4</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 5 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>5</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 6 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>6</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 7 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>7</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 8 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>8</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 9 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>9</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <!-- 10 -->
+                                    <tr>
+                                        <td><input type="checkbox" name="delete"></td>
+                                        <td>10</td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
+                                                <input name="dealofcountrparty_id" type="hidden" >
+                                                <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                             </div>
+                                        </td>
+                                        <td><div class="inner-table">
+                                                <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="budgetitem_id" type="hidden" >
+                                                <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="inner-table">
+                                                <input name="project_id" type="hidden" >
+                                                <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
+                                                <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
                             </table>
 
                         </form>
@@ -412,26 +717,7 @@
 
             // Добавляем ячейки в новую строку
             newRow.innerHTML = `
-                <td><input type="checkbox" name="delete"></td>
-                <td>${rowCount}</td>
-                <td><div class="inner-table">
-                        <input name="dealofcountrparty_name" id="open-pop-dealofcountrparty" type="text" class="form-control" placeholder="Выберите договора" oninput="showHiddenDiv(this)" readonly>
-                        <input name="dealofcountrparty_id" type="hidden" >
-                        <button type="button" onclick="showHiddenDiv(this, 'dealofcountrparty')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
-                     </div></td>
-                <td><div class="inner-table">
-                                        <input name="paymentamount_name" id="open-pop-paymentamount" type="text" class="form-control" placeholder="Введите сумму платежа" oninput="showHiddenDiv(this)">
-                                    </div></td>
-                <td><div class="inner-table">
-                                        <input name="budgetitem_id" type="hidden" >
-                                        <input name="budgetitem_name" id="open-pop-budgetitem" type="text" class="form-control" placeholder="Выберите статью бюджета" oninput="showHiddenDiv(this)" readonly>
-                                        <button type="button" onclick="showHiddenDiv(this, 'budgetitem')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
-                                    </div></td>
-                <td><div class="inner-table">
-                                        <input name="project_id" type="hidden" >
-                                        <input name="project_name" id="open-pop-project" type="text" class="form-control" placeholder="Выберите проекты" oninput="showHiddenDiv(this)" readonly>
-                                        <button type="button" onclick="showHiddenDiv(this, 'project')" class="btn btn-info"><i class="fa-solid fa-list"></i></button>
-                                    </div></td>
+
             `;
 
             rowCount++;
@@ -440,21 +726,22 @@
 
 
     function showHiddenDiv(element, fieldName) {
-
         var hiddenDiv = document.querySelector(`.hiddenDiv[data-field="${fieldName}"]`);
         var overlay = document.getElementById('overlay');
 
         hiddenDiv.classList.add('active');
         overlay.classList.add('active');
 
-        // Заполняем таблицу данными с сервера
-        fetch(`${fieldName}_data/`)
+        // Общая ссылка для всех элементов
+        var url = `${fieldName}_data/`;
+
+        // Здесь можно делать разные действия в зависимости от fieldName
+        // Например, заполнение таблицы данными
+
+        fetch(url)
             .then(response => response.json())
             .then(data => populateTable(fieldName, data))
             .catch(error => console.error(`Ошибка при получении данных: ${fieldName} data:`, error));
-
-        var testData = [{id: 1, name: 'Item 1'}, {id: 2, name: 'Item 2'}];
-        populateTable(fieldName, testData);
     }
 
     function populateTable(fieldName, data) {
@@ -538,31 +825,36 @@
         highlightTableRow(fieldName);
     }
 
-    function selectElement(fieldName, selectedId, selectedName) {
-        var inputName = document.getElementsByName(`${fieldName}_name`)[0];
-        var inputId = document.getElementsByName(`${fieldName}_id`)[0];
+    function selectElement(fieldName, selectedId, selectedName, parentDiv) {
+        var inputName = parentDiv.querySelector(`input[name="${fieldName}_name"]`);
+        var inputId = parentDiv.querySelector(`input[name="${fieldName}_id"]`);
 
-        inputName.value = selectedName;
-        inputId.value = selectedId;
+        if (inputName && inputId) {
+            inputName.value = selectedName;
+            inputId.value = selectedId;
 
-        closeHiddenDiv(fieldName);
+            closeHiddenDiv(fieldName);
+        } else {
+            console.error('Input element not found.');
 
-        highlightTableRow(fieldName);
 
-        if (fieldName === 'typeofpays') {
-            var cashDropdown = document.getElementById('cashDropdown');
-            var creditCardDropdown = document.getElementById('creditCardDropdown');
+            highlightTableRow(fieldName);
 
-            if (cashDropdown && creditCardDropdown) {
-                if (selectedName === 'Оплата Картой') {
-                    cashDropdown.style.display = 'block';
-                    creditCardDropdown.style.display = 'none';
-                } else if (selectedName === 'Оплата Наличными') {
-                    cashDropdown.style.display = 'none';
-                    creditCardDropdown.style.display = 'block';
+            if (fieldName === 'typeofpays') {
+                var cashDropdown = document.getElementById('cashDropdown');
+                var creditCardDropdown = document.getElementById('creditCardDropdown');
+
+                if (cashDropdown && creditCardDropdown) {
+                    if (selectedName === 'Оплата Картой') {
+                        cashDropdown.style.display = 'block';
+                        creditCardDropdown.style.display = 'none';
+                    } else if (selectedName === 'Оплата Наличными') {
+                        cashDropdown.style.display = 'none';
+                        creditCardDropdown.style.display = 'block';
+                    }
+                } else {
+                    console.error(`Dropdowns not found for field: ${fieldName}`);
                 }
-            } else {
-                console.error(`Dropdowns not found for field: ${fieldName}`);
             }
         }
     }
